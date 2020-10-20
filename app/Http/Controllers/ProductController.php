@@ -34,11 +34,17 @@ class ProductController extends Controller
     }
 
     public function edit($product) {
-        return "Showing the form to edit the product {$product}";
+        $product = Product::findOrFail($product);
+        return view('products.edit')->with([
+            'product' => $product,
+        ]);
     }
 
     public function update($product) {
+        $product = Product::findOrFail($product);
 
+        $product->update(request()->all());
+        return $product;
     }
 
     public function destroy($product) {
