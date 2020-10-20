@@ -7,6 +7,7 @@
     <title>Document</title>
 </head>
 <body>
+    @dump($errors)
     @if (session('error'))
         <div class="alert alert-danger">
             {{ session('error') }}
