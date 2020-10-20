@@ -34,13 +34,13 @@ class ProductController extends Controller
         if(request()->stock == 0 && request()->status == 'available') {
             session()->flash('error', 'If available must have stock');
 
-            return redirect()->back();
-        } else {
-            $product = Product::create(request()->all());
-            return redirect()->route('products.index');
+            return redirect()
+                ->back()
+                ->withInput();
         }
 
-
+        $product = Product::create(request()->all());
+        return redirect()->route('products.index');
     }
 
     public function show($product) {
@@ -70,6 +70,14 @@ class ProductController extends Controller
         request()->validate($rules);
 
         $product = Product::findOrFail($product);
+
+        if(request()->stock == 0 && request()->status == 'available') {
+            session()->flash('error', 'If available must have stock');
+
+            return redirect()
+                ->back()
+                ->withInput();
+        }
 
         $product->update(request()->all());
 
