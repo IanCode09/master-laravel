@@ -1,9 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-
-<h2>Product Description</h2>
-<h3>{{ $product->title }}</h3>
-<h3>{{ $product->price }}</h3>
-
+    <h2>Product Description</h2>
+    @include('components.product-card')
 @endsection
