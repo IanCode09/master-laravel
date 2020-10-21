@@ -16,7 +16,6 @@ class ProductController extends Controller
 
     public function index() {
         $products = Product::all();
-        // dd($products);
         return view('products.index')->with([
             'products' => $products
         ]);
@@ -51,22 +50,19 @@ class ProductController extends Controller
             ->withSuccess("New Product with id {$product->id} was created");
     }
 
-    public function show($product) {
-        $product = Product::findOrFail($product);
-        // dd($product);
+    public function show(Product $product) {
         return view('products.show')->with([
             'product' => $product
         ]);
     }
 
-    public function edit($product) {
-        $product = Product::findOrFail($product);
+    public function edit(Product $product) {
         return view('products.edit')->with([
             'product' => $product,
         ]);
     }
 
-    public function update($product) {
+    public function update(Product $product) {
         $rules = [
             'title' => ['required', 'max:255'],
             'description' => ['required', 'max:1000'],
@@ -76,8 +72,6 @@ class ProductController extends Controller
         ];
 
         request()->validate($rules);
-
-        $product = Product::findOrFail($product);
 
         if(request()->stock == 0 && request()->status == 'available') {
             return redirect()
@@ -93,8 +87,7 @@ class ProductController extends Controller
             ->withSuccess("The Product with id {$product->id} was updated");;
     }
 
-    public function destroy($product) {
-        $product = Product::findOrFail($product);
+    public function destroy(Product $product) {
         $product->delete();
 
         return redirect()
